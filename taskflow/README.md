@@ -24,15 +24,6 @@ TaskFlow is a beautiful and intuitive task management application built with Rea
 - **Icons**: React Icons
 
 ## 📱 Application Screenshots
-
-### Login Page
-![Login Page](/public/screenshots/login-page.png)
-Secure authentication with email/password and a modern UI with gradient background
-
-### Register Page
-![Register Page](/public/screenshots/register-page.png)
-User-friendly registration form with password confirmation and helpful features list
-
 ### Dashboard
 ![Dashboard](https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&auto=format&fit=crop)
 Clean and intuitive task management interface
