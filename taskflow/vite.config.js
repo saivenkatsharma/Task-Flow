@@ -12,9 +12,30 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: true,
-    minify: 'terser',
+    sourcemap: false,
+    minify: 'esbuild',
     chunkSizeWarningLimit: 1600,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+              return 'vendor-react';
+            }
+            if (id.includes('framer-motion') || id.includes('three') || id.includes('react-three')) {
+              return 'vendor-animations';
+            }
+            if (id.includes('firebase')) {
+              return 'vendor-firebase';
+            }
+            if (id.includes('supabase')) {
+              return 'vendor-supabase';
+            }
+            return 'vendor'; // all other packages
+          }
+        }
+      }
+    }
   },
   server: {
     port: 3000,

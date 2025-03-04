@@ -2,10 +2,6 @@
 const { execSync } = require('child_process');
 
 try {
-  // Install dependencies
-  console.log('Installing dependencies...');
-  execSync('npm install', { stdio: 'inherit' });
-  
   // Install terser specifically (since it's needed for the build)
   console.log('Installing terser...');
   execSync('npm install terser --save-dev', { stdio: 'inherit' });
