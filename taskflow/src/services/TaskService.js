@@ -1,13 +1,6 @@
-import supabase from "../supabase";
+import supabase, { fetchTasks, addTask } from "../../../supabase";
 
-export const fetchTasks = async (userId) => {
-  const { data, error } = await supabase.from("tasks").select("*").eq("user_id", userId);
-  if (error) throw error;
-  return data;
-};
+// Re-export the functions from the root supabase.js
+export { fetchTasks, addTask };
 
-export const addTask = async (task) => {
-  const { data, error } = await supabase.from("tasks").insert([task]);
-  if (error) throw error;
-  return data;
-};
+// You can add additional task-related functions here if needed

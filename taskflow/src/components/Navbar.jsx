@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { motion } from "framer-motion";
+import { FiLogOut, FiUser, FiCheckSquare } from "react-icons/fi";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -16,50 +17,77 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="text-2xl font-bold text-indigo-600">
-              TaskFlow
+    <motion.nav 
+      className="bg-white/90 backdrop-blur-md shadow-lg border-b border-indigo-100 sticky top-0 z-50"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+    >
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="flex justify-between items-center">
+          <motion.div 
+            className="flex items-center"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link to="/" className="flex items-center">
+              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-2 rounded-lg mr-3">
+                <FiCheckSquare className="h-6 w-6" />
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                TaskFlow
+              </span>
             </Link>
-          </div>
+          </motion.div>
           
           <div className="flex items-center">
             {user ? (
-              <div className="flex items-center space-x-4">
-                <span className="text-gray-700">
-                  {user.email}
-                </span>
+              <div className="flex items-center space-x-6">
+                <motion.div 
+                  className="flex items-center space-x-2 bg-indigo-50 px-4 py-2 rounded-full"
+                  whileHover={{ y: -2 }}
+                >
+                  <FiUser className="text-indigo-600" />
+                  <span className="text-indigo-700 font-medium">
+                    {user.email.split('@')[0]}
+                  </span>
+                </motion.div>
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.05, boxShadow: "0 10px 15px -3px rgba(79, 70, 229, 0.3)" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleLogout}
-                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2 rounded-full hover:shadow-lg flex items-center space-x-2"
                 >
-                  Logout
+                  <FiLogOut />
+                  <span>Logout</span>
                 </motion.button>
               </div>
             ) : (
               <div className="flex items-center space-x-4">
-                <Link 
-                  to="/login"
-                  className="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Login
-                </Link>
-                <Link 
-                  to="/register"
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors text-sm font-medium"
-                >
-                  Register
-                </Link>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link 
+                    to="/login"
+                    className="text-indigo-600 hover:text-indigo-800 px-4 py-2 rounded-full border border-indigo-200 hover:border-indigo-400 transition-all duration-200 text-sm font-medium flex items-center space-x-2"
+                  >
+                    <FiUser />
+                    <span>Login</span>
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.05, boxShadow: "0 10px 15px -3px rgba(79, 70, 229, 0.3)" }} whileTap={{ scale: 0.95 }}>
+                  <Link 
+                    to="/register"
+                    className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2 rounded-full hover:shadow-lg transition-all duration-200 text-sm font-medium flex items-center space-x-2"
+                  >
+                    <FiCheckSquare />
+                    <span>Register</span>
+                  </Link>
+                </motion.div>
               </div>
             )}
           </div>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

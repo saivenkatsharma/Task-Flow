@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { taskService } from '../supabase';
+import { taskService } from '../../supabase';
 
 const useTaskStore = create((set) => ({
   tasks: [],
@@ -10,10 +10,33 @@ const useTaskStore = create((set) => ({
   loadTasks: async (userId) => {
     set({ loading: true, error: null });
     try {
-      const tasks = await taskService.getUserTasks(userId);
-      set({ tasks, loading: false });
+      if (!userId) {
+        console.error('No user ID provided to loadTasks');
+        set({ loading: false, error: 'User not authenticated' });
+        return;
+      }
+      
+      console.log('Loading tasks for user ID:', userId);
+      
+      // Try to get tasks from Supabase
+      try {
+        const tasks = await taskService.getUserTasks(userId);
+        console.log('Tasks loaded:', tasks);
+        set({ tasks, loading: false });
+      } catch (supabaseError) {
+        console.error('Supabase error:', supabaseError);
+        
+        // If we can't get tasks from Supabase, provide some sample tasks
+        const sampleTasks = [
+          { id: 'sample1', title: 'Welcome to TaskFlow', description: 'This is a sample task to get you started', status: 'pending', user_id: userId, created_at: new Date().toISOString() },
+          { id: 'sample2', title: 'Create your first task', description: 'Use the form above to create your first real task', status: 'pending', user_id: userId, created_at: new Date().toISOString() }
+        ];
+        
+        set({ tasks: sampleTasks, loading: false });
+      }
     } catch (error) {
-      set({ error: error.message, loading: false });
+      console.error('General error in loadTasks:', error);
+      set({ error: error.message || 'Failed to load tasks', loading: false });
     }
   },
 

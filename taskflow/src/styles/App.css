@@ -1,5 +1,9 @@
 /* Base Styles */
 :root {
+  /* Spinner colors */
+  --spinner-color: #4f46e5;
+  --spinner-size: 40px;
+  
   --primary-color: #4f46e5;
   --secondary-color: #818cf8;
   --background-color: #f3f4f6;
@@ -20,25 +24,71 @@ body {
 /* Dashboard Layout */
 .dashboard-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   min-height: 100vh;
   background: var(--background-color);
-}
-
-.dashboard-3d {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 50vw;
-  height: 100vh;
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .dashboard-content {
-  margin-left: 50vw;
   padding: 2rem;
   min-height: 100vh;
   overflow-y: auto;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* 3D Elements */
+.shape-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(40px);
+  z-index: 1;
+  opacity: 0.6;
+}
+
+.shape-blob-1 {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  top: -100px;
+  left: -100px;
+  animation: float 8s ease-in-out infinite;
+}
+
+.shape-blob-2 {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  bottom: -150px;
+  right: -150px;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+.shape-blob-3 {
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+  top: 50%;
+  right: 10%;
+  animation: float 12s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  50% {
+    transform: translate(20px, 20px) rotate(10deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
 }
 
 /* Welcome Section */
@@ -185,6 +235,21 @@ body {
   background: var(--card-background);
   border-radius: 0.5rem;
   margin-top: 1rem;
+}
+
+/* Loading Spinner */
+.spinner {
+  display: inline-block;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  border: 4px solid rgba(79, 70, 229, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--spinner-color);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* Responsive Design */

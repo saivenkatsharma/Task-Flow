@@ -7,12 +7,24 @@ import Navbar from "./components/Navbar";
 import "./styles/App.css";
 
 function App() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  // Show loading indicator while authentication state is being determined
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="spinner"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <main className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gray-50 w-full">
+      {user && <Navbar />}
+      <main className={user ? "w-full" : ""}>
         <Routes>
           <Route 
             path="/" 
